@@ -1,0 +1,121 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: bisque;
+        }
+        .parent {
+            width: 800px;
+            height: 500px;
+            margin: 50px auto;
+            display: flex;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .one, .Two {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .one {
+            background-color: white;
+        }
+        .Two {
+            background-image: linear-gradient(to bottom, #5f96e7, #a093dd, #c693cd, #dc99bc, #e5a3af);
+        }
+        h1 {
+            text-align: center;
+        }
+        i {
+            font-size: 20px;
+            cursor: pointer;
+        }
+        input {
+            width: 80%;
+            height: 40px;
+            border: 3px solid gray;
+            border-radius: 10px;
+            padding: 5px;
+        }
+        button {
+            width: 30%;
+            height: 40px;
+            border-radius: 20px;
+            background-color: rgb(96, 90, 90);
+            color: cyan;
+            border: none;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: olive;
+            transition: 0.3s ease-out;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form id="login">
+        <div class="parent">
+            <div class="one">
+                <h1>Login</h1>
+                <p>
+                    <i class="fa-brands fa-facebook"></i> &nbsp; &nbsp;
+                    <i class="fa-brands fa-twitter"></i>
+                </p>
+                <p>Or use your account</p>
+                <input type="email" name="Email" placeholder="Email" required><br><br>
+                <input type="password" name="Password" placeholder="Password" required><br><br>
+                <a href="#">Forgot your password?</a><br><br>
+                <button type="submit">Login</button>
+            </div>
+            <div class="Two">
+                <h1>HTML, CSS LOGIN <br> FORM</h1>
+                <p style="text-align: center;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById("login").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            let emailInput = document.querySelector('input[name="Email"]');
+            let passwordInput = document.querySelector('input[name="Password"]');
+
+            let formData = {
+                Email: emailInput.value,
+                Password: passwordInput.value
+            };
+
+            try {
+                let response = await fetch("http://localhost:9183/createadmin", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                let result = await response.json();
+                alert(result.message);
+
+                // 🟢 Form clear karna hai:
+                emailInput.value = "";
+                passwordInput.value = "";
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Login Failed!");
+            }
+        });
+    </script>
+</body>
+</html>
+
